@@ -14,7 +14,48 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { ModeToggle } from "../ModeToggle";
 
+type NavLinkProps = {
+    title: string;
+    path: string;
+};
+
+const links = [
+    {
+        id: 1,
+        title: "Dashboard",
+        path: "#",
+    },
+    {
+        id: 2,
+        title: "Patients",
+        path: "#",
+    },
+    {
+        id: 4,
+        title: "Appointments",
+        path: "#",
+    },
+    {
+        id: 5,
+        title: "Profile",
+        path: "#",
+    },
+];
+
+const NavLink = ({ title, path }: NavLinkProps) => {
+    return (
+        <Link
+            href={path}
+            className="flex items-center gap-2 text-lg font-semibold md:text-base"
+        >
+            {title}
+        </Link>
+    );
+};
+
 const Nav = () => {
+    console.log(links);
+
     return (
         <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
             <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
@@ -25,36 +66,15 @@ const Nav = () => {
                     <Package2 className="h-6 w-6" />
                     <span className="sr-only">Acme Inc</span>
                 </Link>
-                <Link
-                    href="#"
-                    className="text-foreground transition-colors hover:text-foreground"
-                >
-                    Dashboard
-                </Link>
-                <Link
-                    href="#"
-                    className="text-muted-foreground transition-colors hover:text-foreground"
-                >
-                    Orders
-                </Link>
-                <Link
-                    href="#"
-                    className="text-muted-foreground transition-colors hover:text-foreground"
-                >
-                    Products
-                </Link>
-                <Link
-                    href="#"
-                    className="text-muted-foreground transition-colors hover:text-foreground"
-                >
-                    Customers
-                </Link>
-                <Link
-                    href="#"
-                    className="text-muted-foreground transition-colors hover:text-foreground"
-                >
-                    Analytics
-                </Link>
+                {links.map((item) => {
+                    return (
+                        <NavLink
+                            key={item.id}
+                            path={item.path}
+                            title={item.title}
+                        />
+                    );
+                })}
             </nav>
             <Sheet>
                 <SheetTrigger asChild>
