@@ -36,6 +36,7 @@ export default function Page({
 
     return (
         <div className=" w-full min-h-screen mx-auto p-4 max-w-7xl relative z-50 border-2 my-12 rounded m-2">
+
             <div className="bg-white h-full w-full p-4 divide-y-4  divide-blue-950 rounded">
                 {/* Header Section */}
                 <div className="">
@@ -70,6 +71,7 @@ export default function Page({
                 </div>
                 {/* Patient details section */}
                 <div className="text-blue-950 min-h-12 flex flex-col md:flex-row justify-between items-start md:items-center p-4">
+
                     {Object.keys(patientDetails).map((key) => {
                         return (
                             <div className="" key={key}>
@@ -85,6 +87,7 @@ export default function Page({
                 <div className="w-full flex flex-col md:flex-row divide-y-4 md:divide-y-0 md:divide-x-4 divide-blue-950 min-h-screen">
                     {/* Left section */}
                     <div className="w-full md:w-1/3 bg-white text-blue-950 min-h-96 space-y-16 md:space-y-20 p-4 ">
+
                         <div>
                             <h3 className=" font-semibold text-xl my-1">
                                 Vitals:{" "}
@@ -128,6 +131,7 @@ export default function Page({
                     <div className="w-full md:w-2/3 min-h-96 p-4 bg-teal-50">
                         Right
                     </div>
+
                 </div>
                 {/* Footer section */}
                 <div className=" p-4 uppercase bg-blue-950 text-center align-middle h-[160px] flex items-center justify-center font-semibold text-lg text-white">
@@ -137,3 +141,4 @@ export default function Page({
         </div>
     );
 }
+
