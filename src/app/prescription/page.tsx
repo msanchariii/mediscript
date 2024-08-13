@@ -33,7 +33,7 @@ export default function Page({
 
 
     return (
-        <div className=" w-full min-h-screen mx-auto p-4 max-w-7xl relative z-50">
+        <div className=" w-full min-h-screen mx-auto p-4 max-w-7xl relative z-50 border-2 my-12">
 
             <div className="bg-white h-full w-full p-4 divide-y-4  divide-blue-950">
                 {/* Header Section */}
