@@ -7,7 +7,7 @@ export default function Page({
     searchParams: { id: string };
 }) {
     const id = searchParams.id;
-    console.log(id);
+    // console.log(id);
 
     const vitals: { [key: string]: string } = {
         "Blood Pressure": "60/105 mmHg",
