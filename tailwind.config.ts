@@ -23,6 +23,8 @@ const config = {
                 sans: ["var(--font-sans)", ...fontFamily.sans],
             },
             colors: {
+                prescriptionBlue: "#0F084B",
+                prescriptionLightBlue: "#81B1D5",
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",
                 ring: "hsl(var(--ring))",
