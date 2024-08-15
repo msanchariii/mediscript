@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Patient {
+  id          Int           @id @default(autoincrement())
+  // id          String        @id @default(uuid())
+  name        String
+  address     String?
+  email       String
+  phone       String?
+  dob         DateTime
+  gender      String
+  aadhar      String
+  Appointment Appointment[]
+}
+
+model Doctor {
+  id             Int           @id @default(autoincrement())
+  firstname      String
+  lastname       String
+  email          String        @unique
+  phone          String
+  degree         String
+  workingAddress String
+  dob            DateTime
+  gender         String
+  aadhar         String
+  // regNo          String
+  Appointment    Appointment[]
+}
+
+model Appointment {
+  id               Int      @id @default(autoincrement())
+  patientId        Int
+  doctorId         Int
+  appointmentDate  DateTime @default(now())
+  prescriptionId   String?
+  concern          String?
+  diagnosisSummary String?
+  Patient          Patient  @relation(fields: [patientId], references: [id])
+  Doctor           Doctor   @relation(fields: [doctorId], references: [id])
+}
+
+// enum GENDER {
+//   MALE
+//   FEMALE
+//   NONBINARY
+// }
