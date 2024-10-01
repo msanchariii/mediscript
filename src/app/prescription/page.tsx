@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { Phone } from "lucide-react";
-import { doctor, prescription } from "../data/fakeData";
+import { prescription, doctor } from "@/lib/fakeData";
+// import { doctor } from "../data/fakeData";
+// import { doctor, prescription } from "../data/fakeData";
 
 export default function Page({
     searchParams,

@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Enum gender {
+male
+female
+Trancegender
+}
 
-## Getting Started
+Enum status {
+upcoming
+ongoing
+ended
+}
 
-First, run the development server:
+Enum Role{
+doctor
+helper
+}
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Table User{
+id integer [primary key]
+email_id varchar
+password varchar
+role Role
+}
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Table Helper{
+id integer [primary key]
+name varchar
+doctor_id varchar
+phone_no integer
+address varchar
+dob datetime
+gender gender
+created_at timestamp
+}
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Table Doctor {
+id integer [primary key]
+Name varchar
+dob date
+address varchar
+Reg_no varchar
+gender gender
+phone_no integer
+created_at timestamp
+}
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Table Patient {
+id integer [primary key]
+Name varchar
+babar_naam varchar
+dob date
+address varchar
+gender gender
+phone_no integer
+email_id varchar
+created_at timestamp
+}
 
-## Learn More
+Table Appointment {
+id integer [primary key]
+date datetime
+doc_id integer
+patient_id integer
+Pres_id integer
+status status
+Concern varchar
+Diagnosis_Summery varchar
+created_at timestamp
+}
+Table Prescription {
+id integer [primary key]
+app_id integer
+Concern varchar
+Diagnosis_Summery varchar
+created_at timestamp
+}
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Ref: Doctor.id < Appointment.doc_id
+Ref: Patient.id < Appointment.patient_id
+Ref: Prescription.app_id - Appointment.id
+Ref: Prescription.id - Appointment.Pres_id
