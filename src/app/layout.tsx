@@ -1,11 +1,10 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
-import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-// import Nav from "@/components/Nav/Nav";
 import { AuthProvider } from "@/context/AuthContext";
-import Nav from "@/components/Nav/Nav";
+import { Toaster } from "@/components/ui/toaster";
 
 const fontSans = FontSans({
     subsets: ["latin"],
@@ -38,6 +37,7 @@ export default function RootLayout({
                 >
                     <AuthProvider>
                         <main>{children}</main>
+                        <Toaster />
                     </AuthProvider>
                 </ThemeProvider>
             </body>

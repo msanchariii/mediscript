@@ -1,3 +1,4 @@
+```sql
 Enum gender {
 male
 female
@@ -79,3 +80,4 @@ Ref: Doctor.id < Appointment.doc_id
 Ref: Patient.id < Appointment.patient_id
 Ref: Prescription.app_id - Appointment.id
 Ref: Prescription.id - Appointment.Pres_id
+```

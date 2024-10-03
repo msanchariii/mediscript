@@ -5,7 +5,7 @@ function UserLayout({ children }: { children: React.ReactNode }) {
     return (
         <>
             <Nav />
-            <main className="p-12">{children}</main>
+            <main className="">{children}</main>
         </>
     );
 }
