@@ -3,6 +3,8 @@ import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+// import Nav from "@/components/Nav/Nav";
+import { AuthProvider } from "@/context/AuthContext";
 import Nav from "@/components/Nav/Nav";
 
 const fontSans = FontSans({
@@ -30,12 +32,13 @@ export default function RootLayout({
             >
                 <ThemeProvider
                     attribute="class"
-                    defaultTheme="system"
+                    defaultTheme="dark"
                     enableSystem
                     disableTransitionOnChange
                 >
-                    {/* <Nav /> */}
-                    {children}
+                    <AuthProvider>
+                        <main>{children}</main>
+                    </AuthProvider>
                 </ThemeProvider>
             </body>
         </html>

@@ -3,7 +3,7 @@ import React from "react";
 
 function page() {
     return (
-        <div className="p-4">
+        <div className="p-4 h-screen grid place-items-center">
             <LoginForm />
         </div>
     );

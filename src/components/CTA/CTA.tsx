@@ -21,14 +21,14 @@ export default function CTA() {
                             x-chunk="dashboard-05-chunk-0"
                         >
                             <CardHeader className="pb-3">
-                                <CardTitle>Patients</CardTitle>
+                                <CardTitle>Appointments</CardTitle>
                                 <CardDescription className="text-balance max-w-lg leading-relaxed">
                                     Keep track record for patient data and
                                     appointments
                                 </CardDescription>
                             </CardHeader>
                             <CardFooter>
-                                <Button>Create New Patient</Button>
+                                <Button>Create New Appointment</Button>
                             </CardFooter>
                         </Card>
                         <Card x-chunk="dashboard-05-chunk-1">
