@@ -22,17 +22,17 @@ const links = [
     {
         id: 2,
         title: "Patients",
-        path: "#",
+        path: "/patient",
     },
     {
         id: 4,
         title: "Appointments",
-        path: "#",
+        path: "/appointments",
     },
     {
         id: 5,
         title: "Profile",
-        path: "#",
+        path: "/profile",
     },
 ];
 

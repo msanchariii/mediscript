@@ -2,15 +2,15 @@
 import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { Button } from "./ui/button";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const LogoutButton = () => {
     const { auth, logout } = useAuth();
-    // const router = useRouter();
+    const router = useRouter();
 
     const handleLogout = async () => {
         await logout(auth.id!);
-        // router.push("/");
+        router.push("/");
     };
 
     if (!auth.isLoggedIn) {
