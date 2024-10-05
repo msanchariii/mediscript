@@ -3,7 +3,7 @@ const prescription = {
         bloodPressure: "60/105 mmHg",
         bloodSugar: "160mg/dl",
         pulseRate: "78BPM",
-        temp: "33 deg C",
+        temperature: "33 deg C",
         spO2: "99%",
     },
     patientDetails: {

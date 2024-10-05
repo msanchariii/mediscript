@@ -25,11 +25,11 @@ export default function PatientTable() {
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-3 gap-4">
-                        <AppointmentCard status="upcoming" />
-                        <AppointmentCard status="upcoming" />
-                        <AppointmentCard status="upcoming" />
-                        <AppointmentCard status="upcoming" />
-                        <AppointmentCard status="upcoming" />
+                        <AppointmentCard status="upcoming" id="1" />
+                        <AppointmentCard status="upcoming" id="2" />
+                        <AppointmentCard status="upcoming" id="3" />
+                        <AppointmentCard status="upcoming" id="4" />
+                        <AppointmentCard status="upcoming" id="5" />
                     </div>
                 </CardContent>
                 <CardFooter>

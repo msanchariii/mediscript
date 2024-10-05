@@ -1,23 +1,40 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader } from "../ui/card";
-import { MoveRight } from "lucide-react";
-import { set } from "date-fns";
+import { formatDateString, formatDateToDDMMYYYY } from "@/lib/formatDateString";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "../ui/select";
+import { Divide } from "lucide-react";
+import Link from "next/link";
 
 function AppointmentForm() {
-    const [patients, setPatients] = useState<any>([]);
+    const [patients, setPatients] = useState<any>([]); //filtered patients
+    const [newPatient, setNewPatient] = useState<any>(null);
     const [selectedPatient, setSelectedPatient] = useState<any>(null);
-    const [isDisabled, setIsDisabled] = useState<boolean>(true);
+    const [patientError, setPatientError] = useState<string | null>(null); // patient form error
+
+    const [isDisabled, setIsDisabled] = useState<boolean>(true); // if the appointment form is disabled
     const [isCreateNewPatientDisabled, setIsCreateNewPatientDisabled] =
         useState<boolean>(true);
-    const [isSearchDisabled, setIsSearchDisabled] = useState<boolean>(false);
-    const [patientError, setPatientError] = useState<string | null>(null);
-    const [newPatient, setNewPatient] = useState<any>(null);
     const [isAppointmentCreated, setIsAppointmentCreated] =
         useState<boolean>(false);
+
+    const [newAppointment, setNewAppointment] = useState({
+        concern: "",
+        appointmentDate: "",
+        location: "",
+        patientId: "",
+        status: "upcoming",
+        diagnosisSummery: "",
+    });
 
     const handlePatientSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -52,16 +69,21 @@ function AppointmentForm() {
             setPatientError(
                 "No patient found. Fill all the fields create a new patient."
             );
-            setIsSearchDisabled(true);
+            setIsCreateNewPatientDisabled(false);
+            setNewPatient({
+                name: patientName,
+                dob: dob,
+                phone_no: phone_no || "",
+            });
             return;
         }
 
         if (filteredPatients.length === 0) {
             setPatientError("No patient found. Create a new patient.");
             setIsCreateNewPatientDisabled(false);
-            setIsSearchDisabled(true);
 
             setNewPatient({
+                ...newPatient,
                 name: patientName,
                 dob: dob,
                 phone_no: phone_no || "",
@@ -95,9 +117,39 @@ function AppointmentForm() {
     const handleCreateAppointment = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!selectedPatient) return;
-        console.log("Appointment Created for:", selectedPatient);
-        setIsAppointmentCreated(true);
+
+        const formData = new FormData(e.currentTarget);
+        const { concern, appointmentDate, appointmentLocation } =
+            Object.fromEntries(formData.entries());
+
+        if (concern && appointmentDate && appointmentLocation) {
+            // Create new appointment
+            setNewAppointment({
+                concern: concern as string,
+                appointmentDate: formatDateString(appointmentDate as string), //YYYY-MM-DD
+                location: appointmentLocation as string,
+                patientId: selectedPatient.id,
+                status: "upcoming",
+                diagnosisSummery: "",
+            });
+            setIsAppointmentCreated(true);
+
+            console.log("Appointment Created for:", selectedPatient);
+        } else {
+            console.error("Form fields missing:", {
+                concern,
+                appointmentDate,
+                appointmentLocation,
+            });
+        }
     };
+
+    // Use useEffect to log the updated appointment once it's set
+    useEffect(() => {
+        if (isAppointmentCreated) {
+            console.log("Appointment Details:", newAppointment);
+        }
+    }, [newAppointment, isAppointmentCreated]);
 
     return (
         <div className="space-y-12">
@@ -153,12 +205,16 @@ function AppointmentForm() {
                     <Button type="submit">Search Patient</Button>
                     <Button
                         onClick={handleCreateNewPatient}
-                        disabled={isSearchDisabled}
+                        disabled={isCreateNewPatientDisabled}
                     >
                         Create New Patient
                     </Button>
                 </div>
-                {patientError && <p className="text-red-500">{patientError}</p>}
+                <div className="h-6">
+                    {patientError && (
+                        <p className="text-red-500">{patientError}</p>
+                    )}
+                </div>
             </form>
 
             {/* Display Filtered Patients */}
@@ -176,7 +232,7 @@ function AppointmentForm() {
                                 <Input
                                     type="text"
                                     required
-                                    name="patientName"
+                                    // name="patientName"
                                     disabled
                                     value={selectedPatient?.name || ""}
                                 />
@@ -186,7 +242,7 @@ function AppointmentForm() {
                                     <Label>Phone Number</Label>
                                     <Input
                                         type="text"
-                                        name="phone"
+                                        // name="phone"
                                         disabled
                                         value={selectedPatient?.phone_no || ""}
                                     />
@@ -195,7 +251,7 @@ function AppointmentForm() {
                                     <Label>Email Address</Label>
                                     <Input
                                         type="email"
-                                        name="email"
+                                        // name="email"
                                         disabled
                                         value={selectedPatient?.email || ""}
                                     />
@@ -206,7 +262,7 @@ function AppointmentForm() {
                                     <Label>Gender</Label>
                                     <Input
                                         type="text"
-                                        name="gender"
+                                        // name="gender"
                                         disabled
                                         value={selectedPatient?.gender || ""}
                                     />
@@ -215,7 +271,7 @@ function AppointmentForm() {
                                     <Label>Age</Label>
                                     <Input
                                         type="text"
-                                        name="age"
+                                        // name="age"
                                         disabled
                                         value={selectedPatient?.dob || ""}
                                     />
@@ -231,10 +287,64 @@ function AppointmentForm() {
                                     disabled={isDisabled}
                                 />
                             </div>
-                            <div className="space-y-3">
-                                <Button type="submit" disabled={isDisabled}>
+                            <div className="grid grid-cols-2 gap-6">
+                                <div className="space-y-3">
+                                    <Label>Appointment Date</Label>
+                                    <Input
+                                        type="text"
+                                        name="appointmentDate"
+                                        disabled={isDisabled}
+                                        value={
+                                            selectedPatient?.appointmentDate ||
+                                            formatDateToDDMMYYYY(new Date())
+                                        }
+                                    />
+                                </div>
+                                <div className="space-y-3">
+                                    <Label>Appointment Location</Label>
+                                    <Select name="appointmentLocation">
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Select a location" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="l1">
+                                                Location 1
+                                            </SelectItem>
+                                            <SelectItem value="l2">
+                                                Location 2
+                                            </SelectItem>
+                                            <SelectItem value="l3">
+                                                Location 2
+                                            </SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </div>
+                            <div className="flex w-full justify-between space-x-6">
+                                <Button
+                                    type="submit"
+                                    disabled={
+                                        isDisabled || isAppointmentCreated
+                                    }
+                                >
                                     Create Appointment
                                 </Button>
+                                {isAppointmentCreated && (
+                                    // < className="">
+                                    <div className="space-x-6">
+                                        <Button variant={"secondary"}>
+                                            <Link href="/appointments">
+                                                {/* ! Check if doctor */}
+                                                Start Consultation
+                                            </Link>
+                                        </Button>
+                                        <Button asChild variant={"secondary"}>
+                                            <Link href="/appointments/new">
+                                                Add Another
+                                            </Link>
+                                        </Button>
+                                    </div>
+                                )}
                             </div>
                         </form>
                     </CardContent>
@@ -262,8 +372,9 @@ function AppointmentForm() {
                                         }}
                                         className="aspect-square"
                                         variant={"secondary"}
+                                        size={"icon"}
                                     >
-                                        Select
+                                        {">"}
                                     </Button>
                                 </div>
                             ))}

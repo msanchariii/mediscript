@@ -24,11 +24,14 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import Link from "next/link";
 
 export default function AppointmentCard({
     status,
+    id,
 }: {
     status: "upcoming" | "completed" | "cancelled";
+    id: string;
 }) {
     const formattedDate = new Intl.DateTimeFormat("en-IN", {
         dateStyle: "full",
@@ -92,13 +95,15 @@ export default function AppointmentCard({
                             className="w-full self-end"
                             variant={"secondary"}
                         >
-                            View Prescription
+                            View
                         </Button>
                     )}
                     {appointmentStatus === "upcoming" && (
                         <div className="w-full grid grid-cols-2 gap-x-4 self-end">
                             <Button className="w-full" variant={"secondary"}>
-                                Start Consultation
+                                <Link href={`/appointments/${id}`}>
+                                    Start Consultation
+                                </Link>
                             </Button>
                             <CancelAppointmentAlert
                                 handleCancelAppointment={
